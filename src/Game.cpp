@@ -19,6 +19,7 @@ int Game::run(){
     int frame_skips;
     const sf::Time period = 
         sf::seconds(1.0f/kTargetFramerate);
+    float frame_rate;
 
     // Sleep-related variables
     sf::Time sleep_time = period;
@@ -68,6 +69,8 @@ int Game::run(){
             update(period);
         }
     }
+
+    return 0;
 }
 
 void Game::processEvents(){
