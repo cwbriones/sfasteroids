@@ -63,3 +63,6 @@ void SceneNode::updateChildren(sf::Time delta_time){
         child->update(delta_time);
     }
 }
+
+void SceneNode::onCommand(const Command& command, sf::Time delta_time){
+}
