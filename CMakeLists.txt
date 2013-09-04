@@ -22,6 +22,7 @@ add_executable(${EXECUTABLE_NAME}
                 src/Game.cpp
                 src/SceneNode.cpp
                 src/Entity.cpp
+                src/RenderingMonitor.cpp
 )
 
 #Set compiler flags

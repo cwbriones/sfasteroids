@@ -19,6 +19,7 @@ class StateManager : private sf::NonCopyable {
         };
 
         explicit StateManager(State::Context context);
+        const State* getCurrentState();
         
         void update(sf::Time delta_time);
         void draw() const;
@@ -29,14 +30,11 @@ class StateManager : private sf::NonCopyable {
 
         template <typename StateType>
         void registerState(States::ID id);
-
-        const State* getCurrentState();
-
     private:
         void applyStateChanges();
 
-        void pushState(States::ID id);
         void popState();
+        void pushState(States::ID id);
 
         void clearStates();
         void clearToState(States::ID id);
@@ -48,13 +46,18 @@ class StateManager : private sf::NonCopyable {
             State::ID id;
         };
 
-        std::queue<StateChange> pending_changes_;
         std::list<State::Ptr> state_stack_;
+        std::queue<StateChange> pending_changes_;
+
+        // Maps state IDs to their constructors
         std::map<States::ID, std::function<void(State::Ptr)>> state_creator_;
 
         State::Context context_;
 };
 
+/**
+ * Assigns a state constructor to a specified state ID
+ */
 template <typename StateType>
 void StateManager::registerState<StateType>(States::ID id){
     stateCreator_[id] = 

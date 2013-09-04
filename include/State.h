@@ -26,15 +26,18 @@ class State {
 
         State(StateManager& manager, Context context);
 
-        virtual void update(sf::Time delta_time) = 0;
-        virtual void draw() const = 0;
-        virtual void handleEvent(const sf::Event& event) = 0;
+        virtual bool update(sf::Time delta_time) = 0;
+        virtual bool draw() const = 0;
+        virtual bool handleEvent(const sf::Event& event) = 0;
 
+        // Not including these because any work that needs to be done
+        // in these cases can be done in the constructor/destructor
+        //
         // virtual void onEnter(){}
         // virtual void onExit(){}
 
-        // virtual void onHidden(){}
-        // virtual void onRevealed(){}
+        virtual void onHidden(){}
+        virtual void onRevealed(){}
     protected:
         void requestStatePush(States::ID id);
         void requestClearToState(States::ID id);
@@ -42,7 +45,6 @@ class State {
 
         Context getContext() const;
     private:
-        States::ID id_;
         Context context_;
         StateManager* manager_;
 };

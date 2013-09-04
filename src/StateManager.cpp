@@ -10,7 +10,7 @@ void StateManager::popState(){
 }
 
 void StateManager::pushState(States::ID id){
-    State::Ptr new_state = state_creator_[id]();
+    State::Ptr new_state = createState(id);
     state_stack_.push_back(std::move(new_state));
 }
 
@@ -18,7 +18,6 @@ void StateManager::clearStates(){
     while (!state_stack_.empty()){
         auto top = std::move(state_stack_.back());
         // Do something with the state about to be destroyed
-
         state_stack_.pop_back();
     }
 }
@@ -28,16 +27,33 @@ void StateManager::clearToState(States::ID id){
     pushState(id);
 }
 
+void StateManager::handleEvent(const sf::Event& event){
+    for (auto iter = state_stack_.rbegin(); iter != state_stack_.rend(); ++iter){
+        if (!(*iter)->handleEvent(event)){
+            return;
+        }
+    }
+    applyStateChanges();
+}
+
 void StateManager::update(sf::Time delta_time){
-    state_stack_.back()->update(delta_time);
+    for (auto iter = state_stack_.rbegin(); iter != state_stack_.rend(); ++iter){
+        if (!(*iter)->update(delta_time)){
+            return;
+        }
+    }
+    applyStateChanges();
 }
 
 void StateManager::draw() const {
-    state_stack_.back()->draw();
+    for (auto iter = state_stack_.begin(); iter != state_stack_.end(); ++iter){
+        (*iter)->draw();
+    }
 }
 
 void StateManager::requestStateChange(Action action, States::ID new_id){
-    StateChange chage;
+    StateChange change;
+
     change.action = action;
     change.id = new_id;
 
@@ -67,7 +83,10 @@ bool StateManager::isEmpty(){
 }
 
 State::Ptr StateManager::createState(States::ID id){
-    return state_creator_[id]();
+    auto found = state_creator_.find(id);
+    assert(found != state_creator_.end());
+
+    return found->second();
 }
 
 inline const State* StateManager::getCurrentState(){

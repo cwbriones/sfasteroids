@@ -1,7 +1,10 @@
+#include "Game.h"
+
 #include <SFML/System.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "Game.h"
+#include <iostream>
+#include <iomanip>
 
 const float kTargetFramerate = 60.0f;
 
@@ -22,7 +25,7 @@ int Game::run(){
     float frame_rate;
 
     // Sleep-related variables
-    sf::Time sleep_time = period;
+    sf::Time sleep_time;
     sf::Time actual_sleep = sf::Time::Zero;
     sf::Time overslept_time = sf::Time::Zero;
 
@@ -68,6 +71,7 @@ int Game::run(){
             processEvents();
             update(period);
         }
+        rendering_monitor_.incrementSkips(frame_skips);
     }
 
     return 0;
@@ -78,18 +82,24 @@ void Game::processEvents(){
     sf::Event event;
 
     while (window_.pollEvent(event)){
-        if (event.type == sf::Event::Closed){
+        if (event.type == sf::Event::Closed ||
+           (event.type == sf::Event::KeyPressed && 
+            event.key.code == sf::Keyboard::Escape)){
             window_.close();
         }
     }
 }
 
 void Game::update(sf::Time delta_time){
-
+    rendering_monitor_.update(delta_time);
 }
 
 void Game::render(){
     window_.clear();
+
+    float fps = rendering_monitor_.currentFps();
+    std::cout << "  " << std::setw(2) << std::setprecision(4) << fps << '\r';
+    std::cout.flush();
 
     // Frame-by-frame rendering goes here
 

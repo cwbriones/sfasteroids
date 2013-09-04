@@ -1,6 +1,8 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include "RenderingMonitor.h"
+
 #include <SFML/Graphics/RenderWindow.hpp>
 
 class Game {
@@ -13,6 +15,7 @@ class Game {
         void render();
 
         sf::RenderWindow window_;
+        RenderingMonitor rendering_monitor_;
 };
 
 #endif /* GAME_H_ */

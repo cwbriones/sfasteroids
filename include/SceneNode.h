@@ -1,7 +1,7 @@
 #ifndef SCENENODE_H_
 #define SCENENODE_H_
 
-#include "Command.h"
+// #include "Command.h"
 
 #include <SFML/System.hpp>
 
@@ -26,7 +26,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable,
         sf::Transform getWorldTransform() const;
         sf::Vector2f getWorldPosition() const;
 
-        void onCommand(const Command& command, sf::Time delta_time);
+        // void onCommand(const Command& command, sf::Time delta_time);
     private:
         virtual void draw(sf::RenderTarget& target, 
                 sf::RenderStates states) const final;
