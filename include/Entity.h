@@ -1,10 +1,15 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
+#include "SceneNode.h"
+
+#include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
-class Entity {
+class Entity : public SceneNode {
     public:
+        virtual void updateCurrent(sf::Time delta_time) override;
+        
         void setVelocity(sf::Vector2f velocity);
         void setVelocity(float vel_x, float vel_y);
 

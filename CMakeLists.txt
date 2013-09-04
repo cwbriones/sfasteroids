@@ -20,6 +20,7 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 add_executable(${EXECUTABLE_NAME} 
                 src/main.cpp
                 src/Game.cpp
+                src/SceneNode.cpp
                 src/Entity.cpp
 )
 

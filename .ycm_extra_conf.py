@@ -54,16 +54,7 @@ flags = [
 '-I',
 '.'
 '-I',
-'..',
-'-I',
-'./include/',
-'../include/',
-'-l'
-'sfml-system'
-'-l',
-'sfml-graphics',
-'-l',
-'sfml-window'
+'./include'
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the

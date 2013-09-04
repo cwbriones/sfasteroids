@@ -1,5 +1,9 @@
 #include "Entity.h"
 
+void Entity::updateCurrent(sf::Time delta_time){
+    move(velocity_ * delta_time.asSeconds());
+}
+
 void Entity::setVelocity(sf::Vector2f velocity){
     velocity_ = velocity;
 }
