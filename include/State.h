@@ -1,18 +1,14 @@
 #ifndef STATE_H_
 #define STATE_H_
 
-#include <memory>
+#include "ResourceHolder.h"
+#include "StateManager.h"
+#include "Identifier.h"
 
-namespace States {
-    enum ID {
-        kNullState,
-        kTitleState,
-        kMainMenuState,
-        kGameplayState,
-        kLoadingState,
-        kPausedState
-    };
-};
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
+
+#include <memory>
 
 class State {
     public:
@@ -28,6 +24,8 @@ class State {
             sf::FontHolder* fonts;
         };
 
+        State(StateManager& manager, Context context);
+
         virtual void update(sf::Time delta_time) = 0;
         virtual void draw() const = 0;
         virtual void handleEvent(const sf::Event& event) = 0;
@@ -37,8 +35,16 @@ class State {
 
         // virtual void onHidden(){}
         // virtual void onRevealed(){}
+    protected:
+        void requestStatePush(States::ID id);
+        void requestClearToState(States::ID id);
+        void requestStatePop();
+
+        Context getContext() const;
     private:
-        States::ID id;
+        States::ID id_;
+        Context context_;
+        StateManager* manager_;
 };
 
 #endif /* STATE_H_ */

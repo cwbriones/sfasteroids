@@ -1,6 +1,8 @@
 #ifndef RESOURCEHOLDER_H_
 #define RESOURCEHOLDER_H_
 
+#include "Identifier.h"
+
 #include <map>
 #include <memory>
 #include <string>
@@ -16,5 +18,8 @@ class ResourceHolder{
 };
 
 #include "ResourceHolder.inl"
+
+typedef ResourceHolder<sf::Texture, Textures::Identifier> TextureHolder;
+typedef ResourceHolder<sf::Font, Fonts::Identifier> FontHolder;
 
 #endif /* RESOURCEHOLDER_H_ */

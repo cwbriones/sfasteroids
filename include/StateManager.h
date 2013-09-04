@@ -25,22 +25,24 @@ class StateManager : private sf::NonCopyable {
         void handleEvent(const sf::Event& event);
 
         void requestStateChange(Action action, States::ID new_id);
-        void applyStateChanges();
-
-        void pushState(States::ID id);
-        void popState();
-        void clearStates();
-
-        void clearToState(States::ID id);
         bool isEmpty();
-
-        State::Ptr createState(States::ID id);
 
         template <typename StateType>
         void registerState(States::ID id);
 
         const State* getCurrentState();
+
     private:
+        void applyStateChanges();
+
+        void pushState(States::ID id);
+        void popState();
+
+        void clearStates();
+        void clearToState(States::ID id);
+
+        State::Ptr createState(States::ID id);
+
         struct StateChange {
             Action action;
             State::ID id;
