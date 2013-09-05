@@ -65,6 +65,9 @@ void StateManager::applyStateChanges(){
         auto change = pending_changes_.front();
 
         switch (change.action){
+            case Action::kClearAllStates:
+                clearStates();
+                break;
             case Action::kClearToState:
                 clearToState(change.id);
                 break;

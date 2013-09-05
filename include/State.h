@@ -27,8 +27,8 @@ class State {
         State(StateManager& manager, Context context);
 
         virtual bool update(sf::Time delta_time) = 0;
-        virtual bool draw() const = 0;
         virtual bool handleEvent(const sf::Event& event) = 0;
+        virtual void draw() const = 0;
 
         // Not including these because any work that needs to be done
         // in these cases can be done in the constructor/destructor
@@ -42,8 +42,12 @@ class State {
         void requestStatePush(States::ID id);
         void requestClearToState(States::ID id);
         void requestStatePop();
+        void requestClearAll();
 
         Context getContext() const;
+
+        static const bool ALLOW_OTHER_UPDATES = true;
+        static const bool SUPRESS_OTHER_UPDATES = false;
     private:
         Context context_;
         StateManager* manager_;

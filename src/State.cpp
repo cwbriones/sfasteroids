@@ -20,3 +20,7 @@ void State::requestStatePop(){
 void State::requestClearToState(States::ID id){
     manager_->requestStateChange(StateManager::kClearToState, id);
 }
+
+void State::requestClearAll(){
+    manager_->requestStateChange(StateManager::kClearAllStates, States::kNullState);
+}

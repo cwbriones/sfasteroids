@@ -15,7 +15,8 @@ class StateManager : private sf::NonCopyable {
         enum Action {
             kPushState,
             kPopState,
-            kClearToState
+            kClearToState,
+            kClearAllStates
         };
 
         explicit StateManager(State::Context context);
