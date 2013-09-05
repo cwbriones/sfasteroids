@@ -1,14 +1,17 @@
 #ifndef STATE_MANAGER_H_
 #define STATE_MANAGER_H_
 
+#include "Identifier.h"
 #include "State.h"
 
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include <functional>
 #include <list>
 #include <queue>
+#include <map>
 
 class StateManager : private sf::NonCopyable {
     public:
@@ -44,14 +47,14 @@ class StateManager : private sf::NonCopyable {
 
         struct StateChange {
             Action action;
-            State::ID id;
+            States::ID id;
         };
 
         std::list<State::Ptr> state_stack_;
         std::queue<StateChange> pending_changes_;
 
         // Maps state IDs to their constructors
-        std::map<States::ID, std::function<void(State::Ptr)>> state_creator_;
+        std::map<States::ID, std::function<State::Ptr(void)> > state_creator_;
 
         State::Context context_;
 };
@@ -60,8 +63,8 @@ class StateManager : private sf::NonCopyable {
  * Assigns a state constructor to a specified state ID
  */
 template <typename StateType>
-void StateManager::registerState<StateType>(States::ID id){
-    stateCreator_[id] = 
+void StateManager::registerState(States::ID id){
+    state_creator_[id] = 
     [this](){
         return State::Ptr(new StateType(*this, context_));
     };

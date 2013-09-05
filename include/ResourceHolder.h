@@ -3,6 +3,9 @@
 
 #include "Identifier.h"
 
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Font.hpp>
+
 #include <map>
 #include <memory>
 #include <string>

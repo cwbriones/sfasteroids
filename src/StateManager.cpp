@@ -78,6 +78,7 @@ void StateManager::applyStateChanges(){
                 pushState(change.id);
                 break;
         }
+        pending_changes_.pop();
     }
 }
 

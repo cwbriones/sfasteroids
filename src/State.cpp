@@ -1,7 +1,8 @@
 #include "State.h"
+#include "StateManager.h"
 
 State::State(StateManager& manager, Context context) 
-    : manager_(manager), context_(context) {}
+    : manager_(&manager), context_(context) {}
 
 State::Context::Context(
         sf::RenderWindow& window, 

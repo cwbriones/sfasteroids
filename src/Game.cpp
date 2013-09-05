@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "Identifier.h"
+#include "TitleState.h"
 
 #include <SFML/System.hpp>
 #include <SFML/Window/Event.hpp>
@@ -14,8 +16,23 @@ const int kMaxFrameSkips = 10;
 
 const std::string kTitle = "SFML Application";
 
-Game::Game() : window_(sf::VideoMode(kWidth, kHeight), kTitle)
-{}
+Game::Game() : 
+    window_(sf::VideoMode(kWidth, kHeight), kTitle),
+    textures_(),
+    fonts_(),
+    state_manager_(State::Context(window_, textures_, fonts_)),
+    rendering_monitor_()
+{
+    window_.setKeyRepeatEnabled(false);
+    fonts_.load(Fonts::kDefaultFont, "./res/Sansation.ttf");
+
+    registerStates();
+    state_manager_.requestStateChange(StateManager::kPushState, States::kTitleState);
+}
+
+void Game::registerStates(){
+    state_manager_.registerState<TitleState>(States::kTitleState);
+}
 
 int Game::run(){
 
@@ -82,6 +99,9 @@ void Game::processEvents(){
     sf::Event event;
 
     while (window_.pollEvent(event)){
+
+        state_manager_.handleEvent(event);
+
         if (event.type == sf::Event::Closed ||
            (event.type == sf::Event::KeyPressed && 
             event.key.code == sf::Keyboard::Escape)){
@@ -91,17 +111,20 @@ void Game::processEvents(){
 }
 
 void Game::update(sf::Time delta_time){
+    // state_manager_.update(delta_time);
     rendering_monitor_.update(delta_time);
 }
 
 void Game::render(){
     window_.clear();
 
+    state_manager_.draw();
+    window_.setView(window_.getDefaultView());
+
     float fps = rendering_monitor_.currentFps();
     std::cout << "  " << std::setw(2) << std::setprecision(4) << fps << '\r';
     std::cout.flush();
 
     // Frame-by-frame rendering goes here
-
     window_.display();
 }

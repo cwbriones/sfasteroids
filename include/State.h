@@ -2,13 +2,14 @@
 #define STATE_H_
 
 #include "ResourceHolder.h"
-#include "StateManager.h"
 #include "Identifier.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include <memory>
+
+class StateManager;
 
 class State {
     public:
@@ -20,8 +21,8 @@ class State {
                     FontHolder& fonts);
 
             sf::RenderWindow* window;
-            sf::TextureHolder* textures;
-            sf::FontHolder* fonts;
+            TextureHolder* textures;
+            FontHolder* fonts;
         };
 
         State(StateManager& manager, Context context);
