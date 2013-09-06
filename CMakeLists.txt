@@ -28,6 +28,7 @@ add_executable(${EXECUTABLE_NAME}
                 src/TitleState.cpp
                 src/GameplayState.cpp
                 src/PausedState.cpp
+                src/Utility.cpp
 )
 
 #Set compiler flags

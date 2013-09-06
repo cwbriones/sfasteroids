@@ -1,16 +1,19 @@
-#include <iostream>
 #include "PausedState.h"
+#include "Utility.h"
+
 #include <SFML/Graphics/RectangleShape.hpp>
 
 PausedState::PausedState(StateManager& manager, Context context) :
     State(manager, context)
 {
     paused_text_.setString("Game Paused");
+    paused_text_.setColor(sf::Color::Red);
     paused_text_.setFont(context.fonts->get(Fonts::kDefaultFont));
     paused_text_.setCharacterSize(50);
+    Utility::centerOrigin(paused_text_);
 
-    auto position = context.window->getPosition();
-    paused_text_.setPosition( position.x/2, position.y/2);
+    auto size = context.window->getSize();
+    paused_text_.setPosition( size.x/2, size.y/2);
 }
 
 

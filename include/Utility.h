@@ -2,10 +2,13 @@
 #define UTILITY_H_
 
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Shape.hpp>
 
-void centerOrigin(sf::Text& text){
-    sf::FloatRect bounds = text.getLocalBounds();
-    text.setOrigin(bounds.width/2.f, bounds.height/2.f);
-}
+namespace Utility {
+
+void centerOrigin(sf::Text& text);
+void centerOrigin(sf::Shape* object);
+
+};
 
 #endif /* UTILITY_H_ */
