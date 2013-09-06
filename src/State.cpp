@@ -10,6 +10,10 @@ State::Context::Context(
         FontHolder& fonts) 
     : window(&window), textures(&textures), fonts(&fonts) {}
 
+const State::Context State::getContext() const {
+    return context_;
+}
+
 void State::requestStatePush(States::ID id){
     manager_->requestStateChange(StateManager::kPushState,  id);
 }

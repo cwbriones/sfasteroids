@@ -45,7 +45,7 @@ class State {
         void requestStatePop();
         void requestClearAll();
 
-        Context getContext() const;
+        const Context getContext() const;
 
         static const bool ALLOW_OTHER_UPDATES = true;
         static const bool SUPRESS_OTHER_UPDATES = false;

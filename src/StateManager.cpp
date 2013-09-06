@@ -4,8 +4,6 @@ StateManager::StateManager(State::Context context)
     : context_(context) {}
 
 void StateManager::popState(){
-    auto top = std::move(state_stack_.back());
-    // Do something with the state about to be destroyed
     state_stack_.pop_back();
 }
 
@@ -16,8 +14,6 @@ void StateManager::pushState(States::ID id){
 
 void StateManager::clearStates(){
     while (!state_stack_.empty()){
-        auto top = std::move(state_stack_.back());
-        // Do something with the state about to be destroyed
         state_stack_.pop_back();
     }
 }
@@ -30,7 +26,7 @@ void StateManager::clearToState(States::ID id){
 void StateManager::handleEvent(const sf::Event& event){
     for (auto iter = state_stack_.rbegin(); iter != state_stack_.rend(); ++iter){
         if (!(*iter)->handleEvent(event)){
-            return;
+            break;
         }
     }
     applyStateChanges();
@@ -39,7 +35,7 @@ void StateManager::handleEvent(const sf::Event& event){
 void StateManager::update(sf::Time delta_time){
     for (auto iter = state_stack_.rbegin(); iter != state_stack_.rend(); ++iter){
         if (!(*iter)->update(delta_time)){
-            return;
+            break;
         }
     }
     applyStateChanges();
