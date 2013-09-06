@@ -5,7 +5,7 @@ namespace Components {
     enum ID {
         kGraphics,
         kPhysics,
-        kInput
+        kInput,
     };
 };
 

@@ -19,7 +19,7 @@ public:
     };
 
     InputHandler();
-    void handleInputEvent(sf::Event& event, CommandQueue& queue);
+    void handleInputEvent(const sf::Event& event, CommandQueue& queue);
     void handleRealtimeEvent(CommandQueue& queue);
 
     void assignKeyToAction(Action action, sf::Keyboard::Key key);

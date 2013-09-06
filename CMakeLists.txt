@@ -29,6 +29,8 @@ add_executable(${EXECUTABLE_NAME}
                 src/GameplayState.cpp
                 src/PausedState.cpp
                 src/Utility.cpp
+                src/World.cpp
+                src/EntityFactory.cpp
 )
 
 #Set compiler flags

@@ -5,6 +5,11 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Shape.hpp>
 
+#define DEBUG_BUILD
+#ifndef DEBUG_BUILD
+#define RELEASE_BUILD
+#endif
+
 namespace Utility {
 
 template<class T>

@@ -9,7 +9,7 @@ bool InputHandler::isRealtimeAction(Action action){
     return false;
 }
 
-void InputHandler::handleInputEvent(sf::Event& event, CommandQueue& queue){
+void InputHandler::handleInputEvent(const sf::Event& event, CommandQueue& queue){
     if (event.type == sf::Event::KeyPressed){
         auto found = key_bindings_.find(event.key.code);
         if (found == key_bindings_.end()){
