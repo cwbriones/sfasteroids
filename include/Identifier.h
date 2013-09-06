@@ -1,6 +1,14 @@
 #ifndef IDENTIFIER_H_
 #define IDENTIFIER_H_
 
+namespace Components {
+    enum ID {
+        kGraphics,
+        kPhysics,
+        kInput
+    };
+};
+
 namespace Textures {
     enum Identifier {
         kEmpty

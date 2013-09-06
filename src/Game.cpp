@@ -20,7 +20,7 @@ const int kMaxFrameSkips = 10;
 const std::string kTitle = "SFML Application";
 
 Game::Game() : 
-    window_(sf::VideoMode(kWidth, kHeight), kTitle),
+    window_(sf::VideoMode(kWidth, kHeight), kTitle, sf::Style::Titlebar | sf::Style::Close),
     textures_(),
     fonts_(),
     state_manager_(State::Context(window_, textures_, fonts_)),
