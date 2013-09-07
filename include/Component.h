@@ -11,12 +11,18 @@ class Component {
 public:
     typedef std::unique_ptr<Component> Ptr;
 
-    virtual void update(Entity& entity, sf::Time delta_time){
-        // Do nothing by default.
-    };
-    
+    void setParent(Entity* parent){ 
+        if (!parent_){ 
+            parent_ =  parent; 
+        } 
+    }
+    Entity* getParent(){ return parent_; }
+    const Entity* getParent() const { return parent_; }
+    virtual void update(sf::Time delta_time){}
     // Cross-component communication
     virtual void receiveMessage(Entity& entity, Components::ID id) = 0;
+private:
+    Entity* parent_ = nullptr;
 };
 
 #endif /* COMPONENT_H_ */

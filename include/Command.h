@@ -17,13 +17,15 @@
  * of whether the command is issued upon an input event
  * or DURING an input event)
  */
+class Entity;
+
 struct Command {
     enum Type {
         kRealTime,
         kEventBased,
         kNumTypes,
     };
-    // std::function<void(SceneNode&, sf::Time)> action;
+    std::function<void(Entity&, sf::Time)> action;
 };
 
 typedef std::queue<Command> CommandQueue;

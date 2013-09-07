@@ -31,6 +31,7 @@ add_executable(${EXECUTABLE_NAME}
                 src/World.cpp
                 src/Entity.cpp
                 src/EntityFactory.cpp
+                src/ShipGraphicsComponent.cpp
 )
 
 #Set compiler flags
