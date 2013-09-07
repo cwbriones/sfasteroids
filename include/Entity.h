@@ -1,7 +1,6 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
-#include "SceneNode.h"
 #include "Identifier.h"
 #include "Component.h"
 
@@ -12,9 +11,9 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
-class Entity : public SceneNode {
+class Entity {
     public:
-        virtual void updateCurrent(sf::Time delta_time) override;
+        virtual void update(sf::Time delta_time);
 
         void addComponent(Components::ID id, Component* component);
         bool hasComponent(Components::ID id);

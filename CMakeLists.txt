@@ -22,7 +22,6 @@ add_executable(${EXECUTABLE_NAME}
                 src/Game.cpp
                 src/InputHandler.cpp
                 src/RenderingMonitor.cpp
-                src/SceneNode.cpp
                 src/State.cpp
                 src/StateManager.cpp
                 src/TitleState.cpp
@@ -30,6 +29,7 @@ add_executable(${EXECUTABLE_NAME}
                 src/PausedState.cpp
                 src/Utility.cpp
                 src/World.cpp
+                src/Entity.cpp
                 src/EntityFactory.cpp
 )
 

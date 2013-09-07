@@ -3,7 +3,6 @@
 
 #include "Command.h"
 #include "ResourceHolder.h"
-#include "SceneNode.h"
 #include "EntityFactory.h"
 
 #include <SFML/System/NonCopyable.hpp>
@@ -35,8 +34,8 @@ class World : private sf::NonCopyable {
         sf::View world_view_;
         
         TextureHolder textures_;
-        SceneNode scene_graph_;
-        std::array<SceneNode*, kLayerCount> scene_layers_;
+        // SceneNode scene_graph_;
+        // std::array<SceneNode*, kLayerCount> scene_layers_;
         CommandQueue command_queue_;
 
         sf::FloatRect world_bounds_;

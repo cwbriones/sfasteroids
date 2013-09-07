@@ -1,8 +1,6 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
-#include "SceneNode.h"
-
 #include <SFML/System/Time.hpp>
 
 #include <functional>
@@ -25,7 +23,7 @@ struct Command {
         kEventBased,
         kNumTypes,
     };
-    std::function<void(SceneNode&, sf::Time)> action;
+    // std::function<void(SceneNode&, sf::Time)> action;
 };
 
 typedef std::queue<Command> CommandQueue;

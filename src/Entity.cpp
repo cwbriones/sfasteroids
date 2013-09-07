@@ -1,22 +1,22 @@
 #include "Entity.h"
 
-void addComponent(Components::ID id, Component* component){
+void Entity::addComponent(Components::ID id, Component* component){
     Component::Ptr ptr(component);
 
     components_[id] = std::move(ptr);
 }
 
-bool hasComponent(Components::ID id){
+bool Entity::hasComponent(Components::ID id){
     return components_.find(id) != components_.end();
 }
 
-const Component* getComponent(Components::ID id){
+const Component* Entity::getComponent(Components::ID id){
     auto item = components_.find(id);
     if (item != components_.end()) {
         return nullptr;
     }
 
-    Component* component = item.second();
+    const Component* component = item->second.get();
 
     switch (id){
         case Components::kGraphics:
@@ -30,9 +30,9 @@ const Component* getComponent(Components::ID id){
     }
 }
 
-void Entity::updateCurrent(sf::Time delta_time){
-    // move(velocity_ * delta_time.asSeconds());
-}
+// void Entity::updateCurrent(sf::Time delta_time){
+//     // move(velocity_ * delta_time.asSeconds());
+// }
 
 void Entity::setVelocity(sf::Vector2f velocity){
     velocity_ = velocity;
