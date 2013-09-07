@@ -1,33 +1,21 @@
 #include "Entity.h"
 
-void Entity::addComponent(Components::ID id, Component* component){
-    Component::Ptr ptr(component);
+#include "InputComponent.h"
+#include "GraphicsComponent.h"
 
-    components_[id] = std::move(ptr);
+#include <cassert>
+
+Entity::Entity(){}
+
+void Entity::addComponent(Components::Type type, Component::Ptr component){
+    component->setParent(this);
+    auto inserted = components_.insert(std::make_pair(type, std::move(component)));
+
+    assert(inserted.second);
 }
 
-bool Entity::hasComponent(Components::ID id){
-    return components_.find(id) != components_.end();
-}
-
-const Component* Entity::getComponent(Components::ID id){
-    auto item = components_.find(id);
-    if (item != components_.end()) {
-        return nullptr;
-    }
-
-    const Component* component = item->second.get();
-
-    switch (id){
-        case Components::kGraphics:
-            break;
-        case Components::kPhysics:
-            break;
-        case Components::kInput:
-            break;
-        default:
-            return component;
-    }
+bool Entity::hasComponent(Components::Type type){
+    return components_.find(type) != components_.end();
 }
 
 void Entity::setVelocity(sf::Vector2f velocity){

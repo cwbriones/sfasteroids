@@ -25,6 +25,7 @@ T clamp(T x, T low, T high){
     return x;
 }
 
+void centerOrigin(sf::Transformable* transformable);
 void centerOrigin(sf::Text& text);
 void centerOrigin(sf::Shape* object);
 

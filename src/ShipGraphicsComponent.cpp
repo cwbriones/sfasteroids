@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
+#include <cassert>
+
 ShipGraphicsComponent::ShipGraphicsComponent() {
     const int NUM_VERTICES = 4;
     const float SCALE = 2.5;
@@ -28,5 +30,9 @@ void ShipGraphicsComponent::update(sf::Time delta_time){
 }
 
 void ShipGraphicsComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(vertices_, getParent()->getTransform());
+    // target.draw(vertices_, getParent()->getTransform());
+    const Entity* parent = getParent();
+    assert(parent);
+
+    target.draw(vertices_, parent->getTransform());
 }

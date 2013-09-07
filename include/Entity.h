@@ -7,6 +7,7 @@
 
 #include <map>
 #include <queue>
+#include <memory>
 #include <string>
 
 #include <SFML/Graphics/Transformable.hpp>
@@ -15,11 +16,23 @@
 
 class Entity : public sf::Transformable {
     public:
-        virtual void update(sf::Time delta_time);
+        typedef std::unique_ptr<Entity> Ptr;
+        Entity();
 
-        void addComponent(Components::ID id, Component* component);
-        bool hasComponent(Components::ID id);
-        const Component* getComponent(Components::ID id);
+        void update(sf::Time delta_time);
+
+        void addComponent(Components::Type type, Component::Ptr component);
+        bool hasComponent(Components::Type type);
+
+        template <class ComponentType>
+        const ComponentType* getComponent(Components::Type type){
+            auto pair = components_.find(type);
+            if (pair != components_.end()){
+                assert(dynamic_cast<const ComponentType*>(pair->second.get()));
+                return static_cast<const ComponentType*>(pair->second.get());
+            }
+            return nullptr;
+        }
 
         void onCommand(Command& command, sf::Time delta_time);
 
@@ -28,7 +41,7 @@ class Entity : public sf::Transformable {
         void setVelocity(float vel_x, float vel_y);
     private:
         sf::Vector2f velocity_;
-        std::map<Components::ID, Component::Ptr> components_;
+        std::map<Components::Type, Component::Ptr> components_;
         // message queue for components
 };
 

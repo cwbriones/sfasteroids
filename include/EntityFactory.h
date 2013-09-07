@@ -13,7 +13,7 @@ class EntityFactory {
 public:
     EntityFactory();
 
-    // Entity::Ptr createShip();
+    Entity::Ptr createShip();
     // Entity::Ptr createAsteroid();
     // Entity::Ptr createAlien();
 

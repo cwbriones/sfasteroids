@@ -3,9 +3,15 @@
 
 namespace Components {
     enum ID {
-        kGraphics,
-        kPhysics,
-        kInput,
+        kStandardPhysics,
+        kShipGraphics,
+        kPlayerInput,
+    };
+
+    enum Type {
+        Physics,
+        Graphics,
+        Input
     };
 };
 

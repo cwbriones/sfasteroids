@@ -11,7 +11,7 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include <array>
+#include <list>
 
 class World : private sf::NonCopyable {
     public:
@@ -42,6 +42,7 @@ class World : private sf::NonCopyable {
         sf::Vector2f spawn_position_;
 
         EntityFactory entity_factory_;
+        std::list<Entity::Ptr> entities_;
 };
 
 #endif /* WORLD_H_ */

@@ -27,10 +27,9 @@ void InputHandler::assignKeyToAction(Action action, sf::Keyboard::Key key){
 }
 
 void InputHandler::initializeBindings(){
-    key_bindings_[sf::Keyboard::Up] = MoveUp;
-    key_bindings_[sf::Keyboard::Down] = MoveDown;
-    key_bindings_[sf::Keyboard::Left] = MoveLeft;
-    key_bindings_[sf::Keyboard::Right] = MoveRight;
+    key_bindings_[MoveForward] = sf::Keyboard::Up;
+    key_bindings_[RotateLeft] = sf::Keyboard::Left;
+    key_bindings_[RotateRight] = sf::Keyboard::Right;
 }
 
 void InputHandler::initializeActions(){

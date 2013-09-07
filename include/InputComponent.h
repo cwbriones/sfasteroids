@@ -5,7 +5,7 @@
 
 class InputComponent : public Component {
 public:
-    void onCommand(const Command& command, sf::Time delta_time) = 0;
+    virtual void onCommand(const Command& command, sf::Time delta_time) = 0;
 };
 
 
