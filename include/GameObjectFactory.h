@@ -2,20 +2,20 @@
 #define ENTITYFACTORY_H_
 
 #include "Component.h"
-#include "Entity.h"
+#include "GameObject.h"
 #include "Identifier.h"
 
 #include <functional>
 #include <map>
 #include <cassert>
 
-class EntityFactory {
+class GameObjectFactory {
 public:
-    EntityFactory();
+    GameObjectFactory();
 
-    Entity::Ptr createShip();
-    // Entity::Ptr createAsteroid();
-    // Entity::Ptr createAlien();
+    GameObject::Ptr createShip();
+    // GameObject::Ptr createAsteroid();
+    // GameObject::Ptr createAlien();
 
     template <class T>
     void registerComponent(Components::ID id);
@@ -26,7 +26,7 @@ private:
 };
 
 template <class ComponentType>
-void EntityFactory::registerComponent(Components::ID id){
+void GameObjectFactory::registerComponent(Components::ID id){
     auto found = component_factory_.find(id);
     assert(found == component_factory_.end());
 

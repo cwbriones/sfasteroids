@@ -12,7 +12,7 @@ World::World(sf::RenderTarget& target) :
     // scene_layers_(),
     world_bounds_(0.f, 0.f, world_view_.getSize().x, world_view_.getSize().y),
     spawn_position_(),
-    entity_factory_()
+    object_factory_()
 {
     loadTextures();
     populate();
@@ -23,23 +23,23 @@ void World::loadTextures(){}
 void World::populate(){
     sf::Vector2u center = render_target_.getSize();
 
-    auto ship = entity_factory_.createShip();
+    auto ship = object_factory_.createShip();
     ship->setPosition(200.f, 200.f);
-    entities_.push_back(std::move(ship));
+    game_objects_.push_back(std::move(ship));
 }
 
 void World::update(sf::Time delta_time){
-    for (auto& entity : entities_){
+    for (auto& object : game_objects_){
     }
 }
 
 void World::draw() const {
     render_target_.setView(world_view_);
 
-    for (auto& entity : entities_){
+    for (auto& object : game_objects_){
         auto graphics = 
-            entity->getComponent<GraphicsComponent>(Components::Graphics);
-        if (graphics){
+            object->getComponent<GraphicsComponent>(Components::Graphics);
+        if (object){
             render_target_.draw(*graphics);
         }
     }

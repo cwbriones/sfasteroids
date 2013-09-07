@@ -8,6 +8,9 @@
 
 #include <map>
 
+class ShipController {
+};
+
 class InputHandler {
 public:
     enum Action {

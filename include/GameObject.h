@@ -1,5 +1,5 @@
-#ifndef ENTITY_H_
-#define ENTITY_H_
+#ifndef GAMEOBJECT_H_
+#define GAMEOBJECT_H_
 
 #include "Identifier.h"
 #include "Component.h"
@@ -14,10 +14,10 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
-class Entity : public sf::Transformable {
+class GameObject : public sf::Transformable {
     public:
-        typedef std::unique_ptr<Entity> Ptr;
-        Entity();
+        typedef std::unique_ptr<GameObject> Ptr;
+        GameObject();
 
         void update(sf::Time delta_time);
 
@@ -45,4 +45,4 @@ class Entity : public sf::Transformable {
         // message queue for components
 };
 
-#endif /* ENTITY_H_ */
+#endif /* GAMEOBJECT_H */

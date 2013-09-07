@@ -12,7 +12,7 @@ class ShipGraphicsComponent : public GraphicsComponent {
 public:
     ShipGraphicsComponent();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    virtual void receiveMessage(Entity& entity, Components::ID id){}
+    virtual void receiveMessage(GameObject& entity, Components::ID id){}
     virtual void update(sf::Time delta_time);
 private:
     sf::VertexArray vertices_;
@@ -21,7 +21,7 @@ private:
 // class AsteroidGraphicsComponent : public GraphicsComponent {
 // public:
 //     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-//     virtual void receiveMessage(Entity& entity, Components::ID id);
+//     virtual void receiveMessage(GameObject& entity, Components::ID id);
 // private:
 //     sf::VertexArray vertices_;
 // };

@@ -29,8 +29,8 @@ add_executable(${EXECUTABLE_NAME}
                 src/PausedState.cpp
                 src/Utility.cpp
                 src/World.cpp
-                src/Entity.cpp
-                src/EntityFactory.cpp
+                src/GameObject.cpp
+                src/GameObjectFactory.cpp
                 src/ShipGraphicsComponent.cpp
 )
 

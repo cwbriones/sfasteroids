@@ -3,7 +3,9 @@
 
 #include "Command.h"
 #include "ResourceHolder.h"
-#include "EntityFactory.h"
+
+#include "GameObject.h"
+#include "GameObjectFactory.h"
 
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/System/Time.hpp>
@@ -41,8 +43,8 @@ class World : private sf::NonCopyable {
         sf::FloatRect world_bounds_;
         sf::Vector2f spawn_position_;
 
-        EntityFactory entity_factory_;
-        std::list<Entity::Ptr> entities_;
+        GameObjectFactory object_factory_;
+        std::list<GameObject::Ptr> game_objects_;
 };
 
 #endif /* WORLD_H_ */

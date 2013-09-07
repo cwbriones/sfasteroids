@@ -23,13 +23,13 @@ void InputHandler::handleRealtimeEvent(CommandQueue& queue){
 }
 
 void InputHandler::assignKeyToAction(Action action, sf::Keyboard::Key key){
-    key_bindings_[key] = action;
+    // key_bindings_[key] = action;
 }
 
 void InputHandler::initializeBindings(){
-    key_bindings_[MoveForward] = sf::Keyboard::Up;
-    key_bindings_[RotateLeft] = sf::Keyboard::Left;
-    key_bindings_[RotateRight] = sf::Keyboard::Right;
+    // key_bindings_[MoveForward] = sf::Keyboard::Up;
+    // key_bindings_[RotateLeft] = sf::Keyboard::Left;
+    // key_bindings_[RotateRight] = sf::Keyboard::Right;
 }
 
 void InputHandler::initializeActions(){

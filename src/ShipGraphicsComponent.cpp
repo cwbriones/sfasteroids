@@ -1,5 +1,5 @@
 #include "GraphicsComponent.h"
-#include "Entity.h"
+#include "GameObject.h"
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -31,7 +31,7 @@ void ShipGraphicsComponent::update(sf::Time delta_time){
 
 void ShipGraphicsComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     // target.draw(vertices_, getParent()->getTransform());
-    const Entity* parent = getParent();
+    const GameObject* parent = getParent();
     assert(parent);
 
     target.draw(vertices_, parent->getTransform());

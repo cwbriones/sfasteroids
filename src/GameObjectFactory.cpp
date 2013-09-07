@@ -1,26 +1,26 @@
-#include "EntityFactory.h"
+#include "GameObjectFactory.h"
 
 #include "GraphicsComponent.h"
 #include "InputComponent.h"
 #include "PhysicsComponent.h"
 
-EntityFactory::EntityFactory(){
+GameObjectFactory::GameObjectFactory(){
     registerComponents();
 }
 
-Component::Ptr EntityFactory::createComponent(Components::ID id){
+Component::Ptr GameObjectFactory::createComponent(Components::ID id){
     auto found = component_factory_.find(id);
     assert(found != component_factory_.end());
 
     return found->second();
 }
 
-void EntityFactory::registerComponents(){
+void GameObjectFactory::registerComponents(){
     registerComponent<ShipGraphicsComponent>(Components::kShipGraphics);
 }
 
-Entity::Ptr EntityFactory::createShip(){
-    Entity::Ptr entity(new Entity());
+GameObject::Ptr GameObjectFactory::createShip(){
+    GameObject::Ptr entity(new GameObject());
 
     Component::Ptr graphics = createComponent(Components::kShipGraphics);
     entity->addComponent(Components::Graphics, std::move(graphics));
