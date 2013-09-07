@@ -25,6 +25,7 @@ class World : private sf::NonCopyable {
     private:
         void loadTextures();
         void populate();
+        void processCommands(sf::Time delta_time);
         
         enum Layer {
             kBackground,

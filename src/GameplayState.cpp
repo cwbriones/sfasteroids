@@ -31,9 +31,7 @@ bool GameplayState::handleEvent(const sf::Event& event){
             requestClearToState(States::kTitleState);
         }
     }
-
-    CommandQueue& command_queue = world_.getCommandQueue();
-    input_handler_.handleInputEvent(event, command_queue);
+    input_handler_.handleInputEvent(event, world_.getCommandQueue());
 
     return ALLOW_OTHER_UPDATES;
 }

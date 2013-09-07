@@ -2,18 +2,28 @@
 #define IDENTIFIER_H_
 
 namespace Components {
+    enum Type {
+        Base,
+        Physics,
+        Graphics,
+        Input
+    };
+
     enum ID {
         kStandardPhysics,
         kShipGraphics,
         kPlayerInput,
     };
-
-    enum Type {
-        Physics,
-        Graphics,
-        Input
-    };
 };
+
+namespace GameObjects {
+    enum Type {
+        kUnknownObject   = 0,
+        kShipObject      = 1 << 0,
+        kAsteroid        = 1 << 1,
+        kNumObjects      = 1 << 2,
+    };
+}
 
 namespace Textures {
     enum Identifier {

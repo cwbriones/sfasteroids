@@ -1,6 +1,8 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
+#include "Identifier.h"
+
 #include <SFML/System/Time.hpp>
 
 #include <functional>
@@ -17,7 +19,7 @@
  * of whether the command is issued upon an input event
  * or DURING an input event)
  */
-class Entity;
+class GameObject;
 
 struct Command {
     enum Type {
@@ -25,7 +27,9 @@ struct Command {
         kEventBased,
         kNumTypes,
     };
-    std::function<void(Entity&, sf::Time)> action;
+
+    GameObjects::Type receiver_type;
+    std::function<void(GameObject&, sf::Time)> action;
 };
 
 typedef std::queue<Command> CommandQueue;

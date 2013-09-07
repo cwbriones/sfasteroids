@@ -1,8 +1,6 @@
 #include "GameObjectFactory.h"
 
 #include "GraphicsComponent.h"
-#include "InputComponent.h"
-#include "PhysicsComponent.h"
 
 GameObjectFactory::GameObjectFactory(){
     registerComponents();
@@ -20,7 +18,7 @@ void GameObjectFactory::registerComponents(){
 }
 
 GameObject::Ptr GameObjectFactory::createShip(){
-    GameObject::Ptr entity(new GameObject());
+    GameObject::Ptr entity(new GameObject(GameObjects::kShipObject));
 
     Component::Ptr graphics = createComponent(Components::kShipGraphics);
     entity->addComponent(Components::Graphics, std::move(graphics));

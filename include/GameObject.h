@@ -3,7 +3,6 @@
 
 #include "Identifier.h"
 #include "Component.h"
-#include "Command.h"
 
 #include <map>
 #include <queue>
@@ -14,10 +13,12 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
+class Command;
+
 class GameObject : public sf::Transformable {
     public:
         typedef std::unique_ptr<GameObject> Ptr;
-        GameObject();
+        GameObject(GameObjects::Type type);
 
         void update(sf::Time delta_time);
 
@@ -39,9 +40,16 @@ class GameObject : public sf::Transformable {
         sf::Vector2f velocity();
         void setVelocity(sf::Vector2f velocity);
         void setVelocity(float vel_x, float vel_y);
+
+        sf::Vector2f acceleration();
+        void setAcceleration(sf::Vector2f acceleration);
+        void setAcceleration(float acc_x, float acc_y);
     private:
         sf::Vector2f velocity_;
+        sf::Vector2f acceleration_;
+
         std::map<Components::Type, Component::Ptr> components_;
+        GameObjects::Type type_ = GameObjects::kUnknownObject;
         // message queue for components
 };
 

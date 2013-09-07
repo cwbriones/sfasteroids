@@ -2,14 +2,13 @@
 #define INPUTHANDLER_H_
 
 #include "Command.h"
+#include "GameObject.h"
 
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include <map>
-
-class ShipController {
-};
+#include <set>
 
 class InputHandler {
 public:
@@ -29,12 +28,15 @@ public:
 private:
     void initializeBindings();
     void initializeActions();
-    static bool isRealtimeAction(Action action);
+    void initializeRealtimeSet();
+    bool isRealtimeAction(Action action);
     
     // Bind keys to actions
     std::map<sf::Keyboard::Key, Action> key_bindings_;
     // Bind actions to commands
     std::map<Action, Command> action_bindings_;
+
+    std::set<Action> realtime_actions_;
 };
 
 #endif /* INPUTHANDLER_H_ */

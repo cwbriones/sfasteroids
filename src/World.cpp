@@ -21,15 +21,32 @@ World::World(sf::RenderTarget& target) :
 void World::loadTextures(){}
 
 void World::populate(){
+    // Create the ship
     sf::Vector2u center = render_target_.getSize();
-
     auto ship = object_factory_.createShip();
-    ship->setPosition(200.f, 200.f);
+    ship->setPosition(center.x/2, center.y/2);
+
     game_objects_.push_back(std::move(ship));
+    
+    // Create the asteroids
 }
 
 void World::update(sf::Time delta_time){
     for (auto& object : game_objects_){
+        object->update(delta_time);
+    }
+    processCommands(delta_time);
+}
+
+void World::processCommands(sf::Time delta_time){
+    while (!command_queue_.empty()){
+        Command& command = command_queue_.back();
+
+        for (auto& object : game_objects_){
+            object->onCommand(command, delta_time);
+        }
+
+        command_queue_.pop();
     }
 }
 
