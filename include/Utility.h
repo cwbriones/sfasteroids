@@ -12,6 +12,8 @@
 
 namespace Utility {
 
+const float PI = 3.1415926;
+
 template<class T>
 T clamp(T x, T low, T high){
     assert(low < high);
@@ -25,6 +27,9 @@ T clamp(T x, T low, T high){
     return x;
 }
 
+float radiansToDegrees(float radians);
+float degreesToRadians(float degrees);
+
 void centerOrigin(sf::Transformable* transformable);
 void centerOrigin(sf::Text& text);
 void centerOrigin(sf::Shape* object);
@@ -34,15 +39,21 @@ bool isZero(float f);
 
 // Standard Vector operations
 
+void rotate(sf::Vector2f& vector, float angle);
+sf::Vector2f getRotated(float angle);
+
 float dot(sf::Vector2f left, sf::Vector2f right);
 float magnitude(sf::Vector2f vector);
+
 float length(sf::Vector2f vector);
+void setLength(sf::Vector2f& vector, float len);
 
 bool areOrthogonal(sf::Vector2f left, sf::Vector2f right);
 sf::Vector2f getOrthogonalVector(sf::Vector2f vector);
 
 void normalize(sf::Vector2f& vector);
 sf::Vector2f unit(sf::Vector2f& vector);
+sf::Vector2f unitInDirection(float angle);
 
 sf::Vector2f getOrthonormalVector(sf::Vector2f vector);
 

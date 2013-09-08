@@ -37,6 +37,8 @@ class GameObject : public sf::Transformable {
 
         void onCommand(Command& command, sf::Time delta_time);
 
+        float getRotationInRadians() const;
+
         sf::Vector2f velocity();
         void setVelocity(sf::Vector2f velocity);
         void setVelocity(float vel_x, float vel_y);
@@ -44,6 +46,15 @@ class GameObject : public sf::Transformable {
         sf::Vector2f acceleration();
         void setAcceleration(sf::Vector2f acceleration);
         void setAcceleration(float acc_x, float acc_y);
+
+        void move();
+        void move(sf::Vector2f vel);
+        void accelerate();
+        void accelerate(sf::Vector2f acc);
+
+        GameObjects::Type getType(){
+            return type_;
+        }
     private:
         sf::Vector2f velocity_;
         sf::Vector2f acceleration_;

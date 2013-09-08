@@ -1,8 +1,8 @@
 #include "GameObject.h"
 #include "Command.h"
 
-#include "InputComponent.h"
 #include "GraphicsComponent.h"
+#include "Utility.h"
 
 #include <cassert>
 
@@ -13,6 +13,8 @@ void GameObject::update(sf::Time delta_time){
     for (auto& component : components_){
         component.second->update(delta_time);
     }
+    move();
+    accelerate();
 }
 
 void GameObject::addComponent(Components::Type type, Component::Ptr component){
@@ -26,6 +28,10 @@ bool GameObject::hasComponent(Components::Type type){
     return components_.find(type) != components_.end();
 }
 
+float GameObject::getRotationInRadians() const {
+    return Utility::degreesToRadians(Transformable::getRotation());
+}
+
 sf::Vector2f GameObject::velocity(){
     return velocity_;
 }
@@ -37,6 +43,22 @@ void GameObject::setVelocity(sf::Vector2f velocity){
 void GameObject::setVelocity(float vel_x, float vel_y){
     velocity_.x = vel_x;
     velocity_.y = vel_y;
+}
+
+void GameObject::move(){
+    Transformable::move(velocity_.x, velocity_.y);
+}
+
+void GameObject::move(sf::Vector2f vel){
+    Transformable::move(vel.x, vel.y);
+}
+
+void GameObject::accelerate(){
+    velocity_ += acceleration_;
+}
+
+void GameObject::accelerate(sf::Vector2f acc){
+    velocity_ += acc;
 }
 
 sf::Vector2f GameObject::acceleration(){

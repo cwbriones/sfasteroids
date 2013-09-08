@@ -20,6 +20,7 @@ class World : private sf::NonCopyable {
         explicit World(sf::RenderTarget& target);
         void update(sf::Time delta_time);
         void draw() const;
+        void constrainObjects();
 
         CommandQueue& getCommandQueue();
     private:

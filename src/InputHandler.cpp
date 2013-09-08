@@ -1,4 +1,6 @@
 #include "InputHandler.h"
+#include "Utility.h"
+
 #include <cassert>
 #include <iostream>
 
@@ -44,29 +46,41 @@ void InputHandler::assignKeyToAction(Action action, sf::Keyboard::Key key){
 }
 
 void InputHandler::initializeBindings(){
-    // key_bindings_[MoveForward] = sf::Keyboard::Up;
+    key_bindings_[sf::Keyboard::Up] = MoveForward;
     key_bindings_[sf::Keyboard::Left] = RotateLeft;
     key_bindings_[sf::Keyboard::Right] = RotateRight;
 }
 
 void InputHandler::initializeActions(){
 
-    // Ship controls
-    Command command;
-    command.receiver_type = GameObjects::kShipObject;
     
     const float ROTATION_RATE = 2.f;
     // RotateLeft
-    command.action = [=](GameObject& object, sf::Time delta_time){
+    action_bindings_[RotateLeft].action = 
+    [=](GameObject& object, sf::Time delta_time){
         object.rotate(-ROTATION_RATE);
     };
-    action_bindings_[RotateLeft] = command;
 
     // RotateRight
-    command.action = [=](GameObject& object, sf::Time delta_time){
+    action_bindings_[RotateRight].action = 
+    [=](GameObject& object, sf::Time delta_time){
         object.rotate(ROTATION_RATE);
     };
-    action_bindings_[RotateRight] = command;
+
+    // MoveForward
+    const float SHIP_ACCELERATION = 0.5f;
+    action_bindings_[MoveForward].action =
+    [=](GameObject& object, sf::Time delta_time){
+        float rotation = object.getRotationInRadians();
+
+        sf::Vector2f acc(0.f, -SHIP_ACCELERATION);
+        Utility::rotate(acc, rotation);
+        object.accelerate(acc);
+    };
+
+    for (auto& pair : action_bindings_){
+        pair.second.receiver_type = GameObjects::kShipObject;
+    }
 }
 
 sf::Keyboard::Key InputHandler::getAssignedKey(Action action) const {
