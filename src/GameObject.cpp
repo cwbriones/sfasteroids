@@ -74,6 +74,8 @@ void GameObject::setAcceleration(float acc_x, float acc_y){
     acceleration_.y = acc_y;
 }
 
+#include <iostream>
+
 void GameObject::onCommand(Command& command, sf::Time delta_time){
     if (type_ == command.receiver_type){
         command.action(*this, delta_time);

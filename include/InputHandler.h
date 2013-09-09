@@ -29,8 +29,8 @@
 class InputHandler {
 public:
     enum Action {
-        RotateLeft,
         RotateRight,
+        RotateLeft,
         MoveForward,
         NumActions
     };

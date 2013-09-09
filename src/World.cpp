@@ -26,6 +26,8 @@
 // but FASTER
 // Left held down and then right pressed will override the rotation to the left
 // and make the ship rotate to the right, again at double speed.
+//
+// For some reason RotateRight is being called TWICE per frame when both keys are held.
 
 World::World(sf::RenderTarget& target) :
     render_target_(target),
@@ -107,13 +109,12 @@ void World::constrainObjects(){
 }
 
 void World::processCommands(sf::Time delta_time){
-    int count = 0;
     while (!command_queue_.empty()){
-        Command& command = command_queue_.back();
+        Command command = command_queue_.pop();
+
         for (auto& object : game_objects_){
             object->onCommand(command, delta_time);
         }
-        command_queue_.pop();
     }
 }
 

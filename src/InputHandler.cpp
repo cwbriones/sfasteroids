@@ -2,7 +2,6 @@
 #include "Utility.h"
 
 #include <cassert>
-#include <iostream>
 
 InputHandler::InputHandler(){
     initializeBindings();
@@ -79,28 +78,27 @@ void InputHandler::initializeBindings(){
 
 void InputHandler::initializeActions(){
 
-    
-    const float ROTATION_RATE = 2.f;
+    const float ROTATION_RATE = 360.f/2.5f;
     // RotateLeft
     action_bindings_[RotateLeft].action = 
     [=](GameObject& object, sf::Time delta_time){
-        object.rotate(-1.f * ROTATION_RATE);
+        object.rotate(-1.f * ROTATION_RATE * delta_time.asSeconds());
     };
 
     // RotateRight
     action_bindings_[RotateRight].action = 
     [=](GameObject& object, sf::Time delta_time){
-        object.rotate(ROTATION_RATE);
+        object.rotate(ROTATION_RATE * delta_time.asSeconds());
     };
 
     // MoveForward
-    const float SHIP_ACCELERATION = 0.5f;
+    const float SHIP_ACCELERATION = 6.0f;
     action_bindings_[MoveForward].action =
     [=](GameObject& object, sf::Time delta_time){
         float rotation = object.getRotation();
         rotation = Utility::degreesToRadians(rotation);
 
-        sf::Vector2f acc(0.f, -SHIP_ACCELERATION);
+        sf::Vector2f acc(0.f, -SHIP_ACCELERATION * delta_time.asSeconds());
         Utility::rotate(acc, rotation);
         object.accelerate(acc);
     };

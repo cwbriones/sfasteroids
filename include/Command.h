@@ -22,6 +22,7 @@
 class GameObject;
 
 struct Command {
+
     enum Type {
         kRealTime,
         kEventBased,
@@ -30,8 +31,26 @@ struct Command {
 
     GameObjects::Type receiver_type;
     std::function<void(GameObject&, sf::Time)> action;
+
 };
 
-typedef std::queue<Command> CommandQueue;
+class CommandQueue {
+public:
+    void push(Command& command){
+        queue_.push(command);
+    }
+
+    Command pop(){
+        Command c = queue_.front();
+        queue_.pop();
+        return c;
+    }
+
+    bool empty(){
+        return queue_.empty();
+    }
+private:
+    std::queue<Command> queue_;
+};
 
 #endif /* COMMAND_H_ */

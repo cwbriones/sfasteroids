@@ -7,7 +7,7 @@ PausedState::PausedState(StateManager& manager, Context context) :
     State(manager, context)
 {
     paused_text_.setString("Game Paused");
-    paused_text_.setColor(sf::Color::Red);
+    paused_text_.setColor(sf::Color::White);
     paused_text_.setFont(context.fonts->get(Fonts::kDefaultFont));
     paused_text_.setCharacterSize(50);
     Utility::centerOrigin(paused_text_);

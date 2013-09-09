@@ -24,15 +24,10 @@ ShipGraphicsComponent::ShipGraphicsComponent() {
 }
 
 void ShipGraphicsComponent::update(sf::Time delta_time){
-    // rotation_ += ROTATION_RATE * delta;
-    // const float ROTATION_RATE = 0.00628f * 2.0f;
-    // entity.rotate(ROTATION_RATE * delta);
+
 }
 
 void ShipGraphicsComponent::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    // target.draw(vertices_, getParent()->getTransform());
-    const GameObject* parent = getParent();
-    assert(parent);
-
-    target.draw(vertices_, parent->getTransform());
+    assert(getParent());
+    target.draw(vertices_, getParent()->getTransform());
 }
