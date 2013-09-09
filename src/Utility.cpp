@@ -3,6 +3,18 @@
 
 namespace Utility {
 
+void clampVector(sf::Vector2f& vector, float max){
+    float mag = magnitude(vector);
+    
+    if (mag > max * max) {
+        vector *= max/static_cast<float>(sqrt(mag));
+    }
+}
+
+float getAngle(sf::Vector2f vector){
+    return PI + atan2(vector.y, vector.x);
+}
+
 float radiansToDegrees(float radians){
     return radians * 180.f / PI;
 }
@@ -59,8 +71,7 @@ float length(sf::Vector2f vector){
 }
 
 void setLength(sf::Vector2f& vector, float len){
-    normalize(vector);
-    vector *= len;
+    vector *= len/length(vector);
 }
 
 bool areOrthogonal(sf::Vector2f left, sf::Vector2f right){
@@ -72,10 +83,7 @@ inline sf::Vector2f getOrthogonalVector(sf::Vector2f vector){
 }
 
 void normalize(sf::Vector2f& vector){
-    float len = length(vector);
-
-    vector.x /= len;
-    vector.y /= len;
+    vector /= length(vector);
 }
 
 sf::Vector2f unit(sf::Vector2f vector){

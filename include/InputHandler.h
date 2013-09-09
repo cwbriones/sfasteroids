@@ -10,6 +10,22 @@
 #include <map>
 #include <set>
 
+// Maybe move actions into a struct?
+// Then reduce the overhead of searching 
+// through the isRealtime and onKeypress sets
+//
+// struct Action {
+//     enum ID {
+//         RotateLeft,
+//         RotateRight,
+//         MoveForward,
+//         NumActions
+//     } type;
+// 
+//     bool isRealtimeAction = false;
+//     bool onKeyPress = true;
+// };
+
 class InputHandler {
 public:
     enum Action {
@@ -29,6 +45,9 @@ private:
     void initializeBindings();
     void initializeActions();
     void initializeRealtimeSet();
+    void initializeKeypressSet();
+
+    bool onKeyPress(Action action);
     bool isRealtimeAction(Action action);
     
     // Bind keys to actions
@@ -36,6 +55,7 @@ private:
     // Bind actions to commands
     std::map<Action, Command> action_bindings_;
 
+    std::set<Action> keypress_actions_;
     std::set<Action> realtime_actions_;
 };
 

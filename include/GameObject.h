@@ -52,6 +52,9 @@ class GameObject : public sf::Transformable {
         void accelerate();
         void accelerate(sf::Vector2f acc);
 
+        bool isAlive(){ return alive_; }
+        void kill(){ alive_ = false; }
+
         GameObjects::Type getType(){
             return type_;
         }
@@ -61,6 +64,8 @@ class GameObject : public sf::Transformable {
 
         std::map<Components::Type, Component::Ptr> components_;
         GameObjects::Type type_ = GameObjects::kUnknownObject;
+        
+        bool alive_ = true;
         // message queue for components
 };
 

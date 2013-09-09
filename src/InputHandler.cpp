@@ -8,12 +8,23 @@ InputHandler::InputHandler(){
     initializeBindings();
     initializeActions();
     initializeRealtimeSet();
+    initializeKeypressSet();
+}
+
+void InputHandler::initializeKeypressSet(){
+    keypress_actions_.insert(RotateLeft);
+    keypress_actions_.insert(RotateRight);
+    keypress_actions_.insert(MoveForward);
 }
 
 void InputHandler::initializeRealtimeSet(){
     realtime_actions_.insert(RotateLeft);
     realtime_actions_.insert(RotateRight);
     realtime_actions_.insert(MoveForward);
+}
+
+bool InputHandler::onKeyPress(Action action){
+    return keypress_actions_.find(action) != keypress_actions_.end();
 }
 
 bool InputHandler::isRealtimeAction(Action action){
@@ -23,11 +34,20 @@ bool InputHandler::isRealtimeAction(Action action){
 void InputHandler::handleInputEvent(const sf::Event& event, CommandQueue& queue){
     if (event.type == sf::Event::KeyPressed){
         auto found = key_bindings_.find(event.key.code);
-        if (found != key_bindings_.end()){
-            auto action = found->second;
 
-            assert(action_bindings_.find(action) != action_bindings_.end());
-            queue.push(action_bindings_[action]);
+        if (found != key_bindings_.end() 
+                && onKeyPress(found->second)
+                && !isRealtimeAction(found->second)){
+            queue.push(action_bindings_[found->second]);
+        }
+    }
+    else if (event.type == sf::Event::KeyReleased){
+        auto found = key_bindings_.find(event.key.code);
+
+        if (found != key_bindings_.end() 
+                && !onKeyPress(found->second)
+                && !isRealtimeAction(found->second)){
+            queue.push(action_bindings_[found->second]);
         }
     }
     return;
@@ -35,8 +55,14 @@ void InputHandler::handleInputEvent(const sf::Event& event, CommandQueue& queue)
 
 void InputHandler::handleRealtimeEvent(CommandQueue& queue){
     for (auto pair : key_bindings_){
-        if (sf::Keyboard::isKeyPressed(pair.first) && isRealtimeAction(pair.second)){
-            queue.push(action_bindings_[pair.second]);
+        if (isRealtimeAction(pair.second)){
+            if (sf::Keyboard::isKeyPressed(pair.first) && onKeyPress(pair.second)){
+                // Do something while the key is down
+                queue.push(action_bindings_[pair.second]);
+            }
+            else if (!onKeyPress(pair.second)){
+                // Do something while the key is up
+            }
         }
     }
 }
@@ -58,7 +84,7 @@ void InputHandler::initializeActions(){
     // RotateLeft
     action_bindings_[RotateLeft].action = 
     [=](GameObject& object, sf::Time delta_time){
-        object.rotate(-ROTATION_RATE);
+        object.rotate(-1.f * ROTATION_RATE);
     };
 
     // RotateRight
@@ -71,7 +97,8 @@ void InputHandler::initializeActions(){
     const float SHIP_ACCELERATION = 0.5f;
     action_bindings_[MoveForward].action =
     [=](GameObject& object, sf::Time delta_time){
-        float rotation = object.getRotationInRadians();
+        float rotation = object.getRotation();
+        rotation = Utility::degreesToRadians(rotation);
 
         sf::Vector2f acc(0.f, -SHIP_ACCELERATION);
         Utility::rotate(acc, rotation);

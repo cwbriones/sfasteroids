@@ -75,7 +75,7 @@ void GameObject::setAcceleration(float acc_x, float acc_y){
 }
 
 void GameObject::onCommand(Command& command, sf::Time delta_time){
-    if (type_ & command.receiver_type){
+    if (type_ == command.receiver_type){
         command.action(*this, delta_time);
     }
 }

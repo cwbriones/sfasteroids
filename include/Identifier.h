@@ -2,6 +2,9 @@
 #define IDENTIFIER_H_
 
 namespace Components {
+    
+    // Component types. Only needed by GameObjects.
+    // i.e. GameObjects are only concerned with the interface of the component.
     enum Type {
         Base,
         Physics,
@@ -9,6 +12,9 @@ namespace Components {
         Input
     };
 
+    // Refer to actual component implementations.
+    // Only needed by GameObjectFactory to instantiate the correct
+    // components when wiring up an object.
     enum ID {
         kStandardPhysics,
         kShipGraphics,
@@ -17,11 +23,13 @@ namespace Components {
 };
 
 namespace GameObjects {
+
+    // Types of game objects
     enum Type {
-        kUnknownObject   = 0,
-        kShipObject      = 1 << 0,
-        kAsteroid        = 1 << 1,
-        kNumObjects      = 1 << 2,
+        kUnknownObject,
+        kShipObject,
+        kAsteroid,
+        kNumObjects
     };
 }
 

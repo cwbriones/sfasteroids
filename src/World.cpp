@@ -2,7 +2,30 @@
 #include "Utility.h"
 #include "GraphicsComponent.h"
 
+#include <algorithm>
 #include <iostream>
+
+// TODO:
+// Figure out why the game is not updating based on simultaneous
+// realtime input events.
+// They are obviously being picked up and inserted into the queue
+// as well as being processed
+//
+// (Holding Left and Right down shows that 2 commands are called each
+// frame, one after the other.
+//
+// Yet for some reason, the ship only continues to rotate in the last
+// direction pressed when you would expect it to stay still when both
+// keys are held down (since it would be rotated one way and then
+// immediately back the other way)
+//
+// FIXME:
+// 
+// EVEN MORE PECULIAR!!!
+// Right held down and the left pressed makes it CONTINUE ROTATING TO THE RIGHT
+// but FASTER
+// Left held down and then right pressed will override the rotation to the left
+// and make the ship rotate to the right, again at double speed.
 
 World::World(sf::RenderTarget& target) :
     render_target_(target),
@@ -30,12 +53,25 @@ void World::populate(){
     // Create the asteroids
 }
 
+// TODO: Make each method called once
+// on a single iteration of the loop
+// since currently we iterate over all objects
+// about three times (update, removal, contraint)
+// This may not help with commands (need to iterate over all)
+
 void World::update(sf::Time delta_time){
     for (auto& object : game_objects_){
         object->update(delta_time);
     }
     processCommands(delta_time);
     constrainObjects();
+    
+    // Cleanup
+    std::remove_if(game_objects_.begin(), game_objects_.end(),
+        [](GameObject::Ptr& object) -> bool {
+            return !object->isAlive();
+        }
+    );
 }
 
 void World::constrainObjects(){
@@ -45,6 +81,8 @@ void World::constrainObjects(){
     for (auto& object :game_objects_){
         // Wrap around positions
         auto position = object->getPosition();
+        auto type = object->getType();
+
         if (position.x > bounds.x){
             object->setPosition(0, position.y);
         }
@@ -59,24 +97,22 @@ void World::constrainObjects(){
         }
 
         // Constrain to max speeds
-        if (object->getType() == GameObjects::kShipObject){
-            // sf::Vector2f velocity = object->velocity();
-            // if (Utility::length(velocity) > MAX_SHIP_SPEED){
-            //     Utility::setLength(velocity, MAX_SHIP_SPEED);
-            //     object->setVelocity(velocity);
-            // }
+        if (type == GameObjects::kShipObject){
+            sf::Vector2f velocity = object->velocity();
+
+            Utility::clampVector(velocity, MAX_SHIP_SPEED);
+            object->setVelocity(velocity);
         }
     }
 }
 
 void World::processCommands(sf::Time delta_time){
+    int count = 0;
     while (!command_queue_.empty()){
         Command& command = command_queue_.back();
-
         for (auto& object : game_objects_){
             object->onCommand(command, delta_time);
         }
-
         command_queue_.pop();
     }
 }
@@ -85,9 +121,10 @@ void World::draw() const {
     render_target_.setView(world_view_);
 
     for (auto& object : game_objects_){
-        auto graphics = 
+        const GraphicsComponent* graphics = 
             object->getComponent<GraphicsComponent>(Components::Graphics);
-        if (object){
+
+        if (graphics){
             render_target_.draw(*graphics);
         }
     }

@@ -13,7 +13,7 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include <list>
+#include <vector>
 
 class World : private sf::NonCopyable {
     public:
@@ -46,7 +46,7 @@ class World : private sf::NonCopyable {
         sf::Vector2f spawn_position_;
 
         GameObjectFactory object_factory_;
-        std::list<GameObject::Ptr> game_objects_;
+        std::vector<GameObject::Ptr> game_objects_;
 };
 
 #endif /* WORLD_H_ */

@@ -27,6 +27,9 @@ T clamp(T x, T low, T high){
     return x;
 }
 
+void clampVector(sf::Vector2f& vector, float max);
+
+float getAngle(sf::Vector2f vector);
 float radiansToDegrees(float radians);
 float degreesToRadians(float degrees);
 
